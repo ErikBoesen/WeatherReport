@@ -38,13 +38,14 @@ def get_fun_fact():
 
 def get_today_in_history():
     events = requests.get("http://history.muffinlabs.com/date").json()["data"]["Events"]
-    event = random.choice(events)["text"]
-    event = re.sub(r"\[[0-9]+\]", "", event)
-    return event
+    event_raw = random.choice(events)
+    event_year = event_raw["year"]
+    event_text = event_raw["text"]
+    event_text = re.sub(r"\[[0-9]+\]", "", event_text)
+    return "in " + event_year + ", " + event_text
 
 def get_joke():
     joke = requests.get("https://icanhazdadjoke.com/", headers={"Accept": "text/plain"}).text
-    joke = decapitalize(joke)
     return joke
 
 def send(message):
@@ -60,11 +61,14 @@ def send(message):
     response = requests.post("https://api.groupme.com/v3/bots/post", data=data)
 
 
+MAX_MESSAGE_LENGTH = 500
+
 message = "\n\n".join([
-    "The weather in New Haven is currently " + get_weather(),
+    "Good morning ΒΣ! Please find today's weather report script below, prepared for your convenience.",
+    "The weather is currently " + get_weather(),
     "Today's fun fact: " + get_fun_fact(),
     "Today in history, " + get_today_in_history(),
-    "Today's joke is, " + get_joke(),
+    "Today's joke: " + get_joke(),
 ])
 
-print(message)
+send(message)
