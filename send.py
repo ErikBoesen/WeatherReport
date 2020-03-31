@@ -32,6 +32,10 @@ def get_fun_fact():
 
 
 
+def get_joke():
+    joke = requests.get("https://icanhazdadjoke.com/", headers={"Accept": "text/plain"}).text
+    return joke
+
 def send(message):
     # Recurse when sending multiple messages.
     if isinstance(message, list):
@@ -48,5 +52,6 @@ def send(message):
 message = "\n\n".join([
     "Current weather in New Haven: " + get_weather(),
     "Fun fact: " + get_fun_fact(),
-
+    "Today in history" + get_today_in_history(),
+    "Joke: " + get_joke(),
 ])
