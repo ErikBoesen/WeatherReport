@@ -4,8 +4,11 @@ import os
 import requests
 import random
 import re
+import time
+import datetime
 
 GROUP_ID = 57653465
+MAX_MESSAGE_LENGTH = 500
 
 bot_id = os.environ.get("GROUPME_BOT_ID")
 if not bot_id:
@@ -71,4 +74,12 @@ message = "\n\n".join([
     "Today's joke: " + get_joke(),
 ])
 
-send(message)
+#send(message)
+
+with open("pledges.txt", "r") as f:
+    pledges = f.read().strip().split("\n")
+START_DATE = datetime.date(2020, 3, 20)
+days_since_start = (datetime.date.today() - START_DATE).days
+pledge = pledges[days_since_start % len(pledges)]
+
+print("Today's weather report sender is " + pledge + ".")
