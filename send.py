@@ -59,12 +59,18 @@ def send(message):
         return
     data = {
         "bot_id": bot_id,
-        "text": message,
     }
+    if len(message) > MAX_MESSAGE_LENGTH:
+        # If text is too long for one message, split it up over several
+        for block in [message[i:i + MAX_MESSAGE_LENGTH] for i in range(0, len(message), MAX_MESSAGE_LENGTH)]:
+            send(block, group_id)
+            time.sleep(2)
+        data["text"] = ""
+    else:
+        data["text"] = message
     response = requests.post("https://api.groupme.com/v3/bots/post", data=data)
 
 
-MAX_MESSAGE_LENGTH = 500
 
 message = "\n\n".join([
     "Good morning ΒΣ! Please find today's weather report script below, prepared for your convenience.",
