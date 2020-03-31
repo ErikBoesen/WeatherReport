@@ -63,7 +63,7 @@ def send(message):
     if len(message) > MAX_MESSAGE_LENGTH:
         # If text is too long for one message, split it up over several
         for block in [message[i:i + MAX_MESSAGE_LENGTH] for i in range(0, len(message), MAX_MESSAGE_LENGTH)]:
-            send(block, group_id)
+            send(block)
             time.sleep(2)
         data["text"] = ""
     else:
