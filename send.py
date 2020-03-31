@@ -2,6 +2,8 @@
 
 import os
 import requests
+import random
+import re
 
 GROUP_ID = 57653465
 
@@ -10,15 +12,19 @@ if not bot_id:
     with open(os.environ["HOME"] + "/groupme_bot_id.txt", "r") as f:
         bot_id = f.read().strip()
 
+def decapitalize(string):
+    return string[0].lower() + string[1:]
+
 def get_weather():
     NH_COORDINATES = {
         "x": 41.3083,
         "y": -72.9279
     }
 
-    r = requests.get("https://api.weather.gov/points/{x},{y}/forecast".format(x=self.NH_COORDINATES["x"],
-                                                                              y=self.NH_COORDINATES["y"]))
+    r = requests.get("https://api.weather.gov/points/{x},{y}/forecast".format(x=NH_COORDINATES["x"],
+                                                                              y=NH_COORDINATES["y"]))
     forecast = r.json()["properties"]["periods"][0]["detailedForecast"]
+    forecast = decapitalize(forecast)
     return forecast
 
 def get_fun_fact():
@@ -32,11 +38,13 @@ def get_fun_fact():
 
 def get_today_in_history():
     events = requests.get("http://history.muffinlabs.com/date").json()["data"]["Events"]
-    event = events[0]["text"]
+    event = random.choice(events)["text"]
+    event = re.sub(r"\[[0-9]+\]", "", event)
     return event
 
 def get_joke():
     joke = requests.get("https://icanhazdadjoke.com/", headers={"Accept": "text/plain"}).text
+    joke = decapitalize(joke)
     return joke
 
 def send(message):
@@ -53,10 +61,10 @@ def send(message):
 
 
 message = "\n\n".join([
-    "Current weather in New Haven: " + get_weather(),
-    "Fun fact: " + get_fun_fact(),
-    "Today in history" + get_today_in_history(),
-    "Joke: " + get_joke(),
+    "The weather in New Haven is currently " + get_weather(),
+    "Today's fun fact: " + get_fun_fact(),
+    "Today in history, " + get_today_in_history(),
+    "Today's joke is, " + get_joke(),
 ])
 
 print(message)
