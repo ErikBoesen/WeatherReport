@@ -80,7 +80,7 @@ message = "\n\n".join([
     "Today's joke: " + get_joke(),
 ])
 
-#send(message)
+send(message)
 
 with open("pledges.txt", "r") as f:
     pledges = f.read().strip().split("\n")
@@ -88,4 +88,4 @@ START_DATE = datetime.date(2020, 3, 20)
 days_since_start = (datetime.date.today() - START_DATE).days
 pledge = pledges[days_since_start % len(pledges)]
 
-print("Today's weather report sender is " + pledge + ".")
+send("Today's weather report sender is " + pledge + ".")
