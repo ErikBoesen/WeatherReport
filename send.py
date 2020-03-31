@@ -30,7 +30,10 @@ def get_fun_fact():
         fact = fact.replace("<" + tag + ">", "").replace("</" + tag + ">", "")
     return fact
 
-
+def get_today_in_history():
+    events = requests.get("http://history.muffinlabs.com/date").json()["data"]["Events"]
+    event = events[0]["text"]
+    return event
 
 def get_joke():
     joke = requests.get("https://icanhazdadjoke.com/", headers={"Accept": "text/plain"}).text
@@ -55,3 +58,5 @@ message = "\n\n".join([
     "Today in history" + get_today_in_history(),
     "Joke: " + get_joke(),
 ])
+
+print(message)
