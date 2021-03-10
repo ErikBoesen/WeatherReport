@@ -73,7 +73,7 @@ def send(message):
 
 
 message = "\n\n".join([
-    "Good morning ΒΣ! Please find today's weather report script below, prepared for your convenience.",
+    "Good morning ΒΣ!",
     "The weather is currently " + get_weather(),
     "Today's fun fact: " + get_fun_fact(),
     "Today in history, " + get_today_in_history(),
