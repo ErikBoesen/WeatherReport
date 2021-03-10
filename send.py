@@ -68,7 +68,7 @@ def send(message):
         data["text"] = ""
     else:
         data["text"] = message
-    response = requests.post("https://api.groupme.com/v3/bots/post", data=data)
+    response = requests.post("https://api.groupme.com/v3/bots/post", json=data)
 
 
 
