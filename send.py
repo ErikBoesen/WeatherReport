@@ -82,6 +82,7 @@ message = "\n\n".join([
 
 send(message)
 
+"""
 with open("pledges.txt", "r") as f:
     pledges = f.read().strip().split("\n")
 START_DATE = datetime.date(2020, 3, 20)
@@ -89,3 +90,4 @@ days_since_start = (datetime.date.today() - START_DATE).days
 pledge = pledges[days_since_start % len(pledges)]
 
 send("Today's weather report sender is " + pledge + ".")
+"""
